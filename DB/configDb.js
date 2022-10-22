@@ -19,15 +19,16 @@ const sequelize = new Sequelize('js', 'root', 'toor', {
 //?sincronizar automáticamente todos los modelos
 
 
-try {
-    if(process.env.DEV){
-        await sequelize.authenticate()
-    }
-} catch (error) {
-    // console.error('Unable to connect to the database:', error);
-    if(process.env.DEV){
-        console.error(error.original.code + "(Sequilize)");
-    }
-}
+// try {
+//     // if(process.env.DEV){
+//     //     await sequelize.authenticate()
+//     // }
+// } catch (error) {
+//     // console.error('Unable to connect to the database:', error);
+//     if(process.env.DEV){
+//         console.error(error.original.code + "(Sequilize)");
+//     }
+// }
+
 
 export default sequelize;

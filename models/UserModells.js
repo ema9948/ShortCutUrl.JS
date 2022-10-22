@@ -1,6 +1,7 @@
 import { Sequelize,DataTypes } from "sequelize";
+import useBcrypt from "sequelize-bcrypt";
 import sequelize from "../DB/configDb.js";
-
+import Post from "./PostModell.js";
 
 const User =  sequelize.define("User",{
     id:{
@@ -10,10 +11,18 @@ const User =  sequelize.define("User",{
     },
     email:{
         type:DataTypes.STRING,
-        allowNull: true
+        unique: { msg: "El Email ya se encuentra en uso" },
+        validate: {
+            isEmail: { msg: "Ingrese un Email valido" }
+        }
+
     },
     password:{
         type:DataTypes.STRING,
+        validate: {
+            notEmpty: { msg: "Ingrese una contraseña" },
+            len: { args: [3, 20], msg: "minomo 3 caracters y maximo 20" }
+        }
     },
     verificado:{
         type: DataTypes.BOOLEAN,
@@ -21,30 +30,25 @@ const User =  sequelize.define("User",{
     }
 })
 
-export const Post =  sequelize.define("User",{
-    id:{
-        type:DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-        primaryKey:true
-    },
-    post:{
-        type:DataTypes.STRING,
-        allowNull:true
-    },
-    userID:{
-        type:DataTypes.UUID,
-        allowNull:true
+useBcrypt(User, {
+    field: 'password', // secret field to hash, default: 'password'
+    rounds: 10, // used to generate bcrypt salt, default: 12
+    compare: process.env.HASH, // method used to compare secrets, default: 'authenticate'
+})
+
+
+User.hasOne(Post, {
+    foreignKey: {
+        name: 'userID',
+        type: DataTypes.UUID
+    }
+});
+Post.belongsTo(User, {
+    foreignKey: {
+        name: 'userId',
     }
 })
 
-//!sequilize agragar frkey automaticamente.
-//*OneToOne
-User.hasOne(Post);
-Post.belongsTo(User)
-
-//?verifi models
-// console.log(User === sequelize.models.User);
-User.sync();
-Post.sync();
+User.sync()
 
 export default User;

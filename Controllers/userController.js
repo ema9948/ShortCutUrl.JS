@@ -1,65 +1,51 @@
-import { Op } from "sequelize";
+import { json, Op } from "sequelize";
+import Post from "../models/PostModell.js";
 import User from "../models/UserModells.js";
-import { Post } from "../models/UserModells.js";
 
-export const Login = async (req,res)=>{
-    const {nombre,password} = req.body;
-    console.log(nombre,password)
-    //?method 1 sabe 
-    // const cris = User.build({nombre:"cristian",apellido:"albornoz"});
-    // await cris.save()
+export const Login = async (req, res) => {
+    const { email, password } = req.body;
 
-    //?method 2 save and build en uno solo metodo 
-    // const cris = await User.create({nombre:"cristian2asdasd",apellido:"albornoz2"});
-    
-    //?actualizacion de un solo parametro
-    // cris.nombre = "Good cristian :)"
-    // await cris.save()
+    try {
 
-    //?actualizacion de varios parametros
-    // cris.set({nombre:"Emanuel",apellido:"ALBORNOZ"});
-    // cris.save();
+        const user = await User.findOne({ where: { email } })
+        if (user === null) return res.status(404).json({ msg: "El Email no esta asociado a ninguna cuenta" })
 
-    //?DESTROY
-    // const cris = await User.create({nombre:"cristian2"});
-    // await cris.destroy()
+        if (!user.compare(password)) return res.status(404).json({ msg: "Verifique las credenciales" })
 
+        // if (!user.verificado) return res.status(404).json({ msg: "Falta verificar la cuenta" })
+        // console.log(user)
 
-    //?buscar all
-    // const users = await User.findAll();
-    //? buscar all por atributos
-    // const users = await User.findAll({attributes:["id","nombre","apellido"]});
+        res.status(200).json(user)
+    } catch (err) {
+        //*para ver errores
+        return res.sendStatus(500)
+    }
 
-    //? WHERE
-    // const where = await User.findAll({where:{id:{[Op.eq]:1}}})
-    // const where = await User.findAll({where:{[Op.and]:[{id:1 , verificado:false}]}})
-
-    // console.log(JSON.stringify(where))
-    // console.log(cris.toJSON())
-    // console.log(JSON.stringify(users,null,2))
-
-
-    // const user = await  User.create({email:"ema9948@gmail.com",password:"123123"});
-    
-    // const post = await Post.create({})
-
-    
-    const user = await User.findOne({where:{email:"ema9948@gmail.com"}});
-    console.log(JSON.stringify(user,null,2))
-    user.email = "ema@gmial.com";
-    user.save()
-    console.log(JSON.stringify(user,null,2))
-    //!CONSOLE.LOG CUANDO CREAMOS UN MODELO
-    // console.log(JSON.stringify(user))
-
-    // const user = await User.findOne({email:"ema9948@gmail.com"});
-    // console.log(user.toJSON());
-
-    res.send("login")
 }
 
 
-export const Register = (req,res)=>{
-    res.send("register")
+export const Register = async (req, res) => {
+
+    const { email, password } = req.body;
+
+    try {
+        const user = await User.create({ email, password });
+        return res.sendStatus(201)
+    } catch (error) {
+        //*para ver errores
+        return res.status(404).json({ msg: error.errors[0].message })
+    }
 }
 
+export const AccounVerify = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const user = await User.findOne({ where: { id } });
+        if (!user) return res.status(404).json({ msg: "Error ID" });
+        user.verificado = true;
+        await user.save();
+        return res.sendStatus(200)
+    } catch (error) {
+        return res.sendStatus(500)
+    }
+}
