@@ -4,7 +4,7 @@ const userRoute = Router();
 
 userRoute.post("/login",Login)
 userRoute.post("/register",Register)
-userRoute.get("/:id", AccounVerify)
+userRoute.get("/verify/:id", AccounVerify)
 
 
 export default userRoute;

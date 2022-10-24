@@ -1,24 +1,31 @@
 import { json, Op } from "sequelize";
-import Post from "../models/PostModell.js";
+import Url from "../models/UrlModells.js";
 import User from "../models/UserModells.js";
+import { jwtGenerate } from "../utils/jwtMangener.js";
 
 export const Login = async (req, res) => {
     const { email, password } = req.body;
-
     try {
 
         const user = await User.findOne({ where: { email } })
-        if (user === null) return res.status(404).json({ msg: "El Email no esta asociado a ninguna cuenta" })
+        // console.log(user.toJSON());
+        if (user == null) return res.status(404).json({ msg: "El Email no esta asociado a ninguna cuenta" })
 
-        if (!user.compare(password)) return res.status(404).json({ msg: "Verifique las credenciales" })
+        if (!user.auth(password)) return res.status(404).json({ msg: "Verifique las credenciales" })
 
         // if (!user.verificado) return res.status(404).json({ msg: "Falta verificar la cuenta" })
-        // console.log(user)
 
-        res.status(200).json(user)
-    } catch (err) {
-        //*para ver errores
-        return res.sendStatus(500)
+        jwtGenerate(user.id, res);
+
+        //? sin cookies, con token
+        // res.status(200).json({ token })
+
+        //?sin token, con cookies
+        res.status(200).json()
+
+    } catch (error) {
+        console.log(error)
+        return res.sendStatus(500).json()
     }
 
 }

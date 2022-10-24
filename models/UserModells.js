@@ -1,7 +1,7 @@
-import { Sequelize,DataTypes } from "sequelize";
-import useBcrypt from "sequelize-bcrypt";
+import useBcrypt from "sequelize-bcrypt"
+import { DataTypes } from "sequelize";
 import sequelize from "../DB/configDb.js";
-import Post from "./PostModell.js";
+import Url from "./UrlModells.js";
 
 const User =  sequelize.define("User",{
     id:{
@@ -10,8 +10,7 @@ const User =  sequelize.define("User",{
         primaryKey: true
     },
     email:{
-        type:DataTypes.STRING,
-        unique: { msg: "El Email ya se encuentra en uso" },
+        type: DataTypes.STRING,
         validate: {
             isEmail: { msg: "Ingrese un Email valido" }
         }
@@ -33,22 +32,12 @@ const User =  sequelize.define("User",{
 useBcrypt(User, {
     field: 'password', // secret field to hash, default: 'password'
     rounds: 10, // used to generate bcrypt salt, default: 12
-    compare: process.env.HASH, // method used to compare secrets, default: 'authenticate'
+    compare: "auth"// method used to compare secrets, default: 'authenticate'
 })
 
-
-User.hasOne(Post, {
-    foreignKey: {
-        name: 'userID',
-        type: DataTypes.UUID
-    }
+User.hasMany(Url, {
+    foreignKey: "user_id"
 });
-Post.belongsTo(User, {
-    foreignKey: {
-        name: 'userId',
-    }
-})
 
-User.sync()
 
 export default User;
