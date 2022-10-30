@@ -1,1 +1,1 @@
-export const url = "https://apishortcuturl.onrender.com";
+export const url = "http://localhost:5000";

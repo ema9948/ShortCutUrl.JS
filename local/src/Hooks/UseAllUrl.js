@@ -9,12 +9,9 @@ const UseAllUrl = () => {
     const allUrl = () => {
 
         const data = fetch(url + "/api/v1/url/allUrl", {
-            mode: "cors",
-            credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': "*",
             },
         })
             .then((res) => res.json())

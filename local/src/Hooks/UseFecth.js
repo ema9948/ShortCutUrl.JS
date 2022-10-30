@@ -9,7 +9,6 @@ const UseFecth = () => {
     const userLogin = (user) => {
         const data = fetch(url + "/api/v1/user/login", {
             method: "post",
-            credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
@@ -19,8 +18,10 @@ const UseFecth = () => {
             .then((res) => res.json())
             .then((date) => {
                 if (date?.msg) return notifyLogin(date?.msg)
-                setUser(date)
+                const { nombre, token } = date;
 
+                setUser({ nombre })
+                localStorage.setItem("token", JSON.stringify({ token }))
             })
             .catch((error) => console.log(error))
 
