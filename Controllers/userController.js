@@ -12,7 +12,7 @@ export const Login = async (req, res) => {
 
         if (!user.auth(password)) return res.status(404).json({ msg: "Verifique las credenciales" })
 
-        // if (!user.verificado) return res.status(401).json({ msg: "Falta verificar la cuenta" })
+        if (!user.verificado) return res.status(401).json({ msg: "Falta verificar la cuenta" })
 
         const token = jwtGenerate(user.id, res);
 
