@@ -40,7 +40,7 @@ export const Register = async (req, res) => {
         const token = jwtGenerate(user.id, res);
         const html = `
         <b>Haz Click para confirmar el email</b>
-        <a href="${process.env.FrontURL}/verify/${token}">Verificar</a>`;
+        <a href="${process.env.FRONTURL}/verify/${token}">Verificar</a>`;
 
         await transporter.sendMail({
             from: '"App" <confirm@gmail.com>', // sender address
