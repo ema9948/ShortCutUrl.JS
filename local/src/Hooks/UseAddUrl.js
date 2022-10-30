@@ -12,11 +12,13 @@ const UseAddUrl = () => {
         if (!isValidURL(data)) return notifyError()
 
         const date = fetch(`${url}/api/v1/url/add`, {
+            mode: "cors",
             method: "post",
             credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': "*",
             },
             body: JSON.stringify(data),
         })

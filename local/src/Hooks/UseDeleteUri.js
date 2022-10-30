@@ -10,6 +10,12 @@ const UseDeleteUri = () => {
 
     const deleteUrl = (id) => {
         const res = fetch(`${url}/api/v1/url/${id}`, {
+            mode: "cors",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': "*",
+            },
             method: "DELETE",
             credentials: "include"
         })

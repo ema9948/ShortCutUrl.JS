@@ -12,11 +12,13 @@ const UsePatchUrl = () => {
     const patchUrl = (data) => {
 
         const res = fetch(urlBackEnd + "/api/v1/url/edit/" + url?.id, {
+            mode: "cors",
             method: "PATCH",
             credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': "*",
             },
             body: JSON.stringify(data),
         })

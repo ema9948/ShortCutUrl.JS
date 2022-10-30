@@ -8,11 +8,13 @@ const UseFecth = () => {
 
     const userLogin = (user) => {
         const data = fetch(url + "/api/v1/user/login", {
+            mode: "cors",
             method: "post",
             credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': "*",
             },
             body: JSON.stringify(user),
         })
@@ -29,11 +31,13 @@ const UseFecth = () => {
 
     const registerUser = (user) => {
         const data = fetch(url + "/api/v1/user/register", {
+            mode: "cors",
             method: "post",
             credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': "*",
             },
             body: JSON.stringify(user),
         })
@@ -54,7 +58,8 @@ const UseFecth = () => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            }
+                'Access-Control-Allow-Origin': "*",
+            },
         })
             .then((res) => console.log(res))
             .catch((error) => console.log(error))
