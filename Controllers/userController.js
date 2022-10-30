@@ -19,7 +19,7 @@ export const Login = async (req, res) => {
 
 
         //?sin token, con cookies
-        return res.status(200).json({ nombre: user.nombre });
+        return res.status(200).json({ nombre: user.nombre, token: token });
 
     } catch (error) {
         return res.sendStatus(500)
@@ -51,7 +51,7 @@ export const Register = async (req, res) => {
         });
 
 
-        return res.sendStatus(201)
+        return res.status(201).json(token)
 
     } catch (error) {
         //*para ver errores
@@ -75,6 +75,6 @@ export const AccounVerify = async (req, res) => {
 }
 
 export const logOut = (req, res) => {
-    res.clearCookie("Token");
+    // res.clearCookie("Token");
     return res.sendStatus(200)
 }
