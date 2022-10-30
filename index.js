@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 
 
-app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+app.use(cors({ origin: process.env.FRONTURL, credentials: true }))
 app.use(express.json())
 app.use(cookieParser());
 
@@ -21,8 +21,7 @@ try {
     await User.sync();
     await Url.sync();
 } catch (error) {
-    // console.error('Unable to connect to the database:', error);
-    console.log(error?.original?.code + "(Sequilize)");
+    // console.log(error?.original?.code + "(Sequilize)");
 };
 
 

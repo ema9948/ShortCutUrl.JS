@@ -44,7 +44,6 @@ export const editUrl = async (req, res) => {
     const uid = req.uid;
     const { id } = req.params;
     const { url } = req.body;
-    console.log(url)
     try {
         if (!url) return res.status(404).json({ "content": "require url" });
 
