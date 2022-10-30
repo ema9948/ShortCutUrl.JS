@@ -38,7 +38,6 @@ export const Register = async (req, res) => {
         user = await User.create({ nombre, email, password });
 
         const token = jwtGenerate(user.id, res);
-
         const html = `
         <b>Haz Click para confirmar el email</b>
         <a href="${process.env.FrontURL}/verify/${token}">Verificar</a>`;

@@ -1,14 +1,15 @@
 import { useContext } from 'react';
+import { Navigate } from 'react-router-dom';
 import { appContext } from '../components/UserProvider';
+import { notify, notifyLogin } from '../utils/toastNotify';
 import { url } from '../utils/urlBackEnd';
-import { token } from '../utils/urlBackEnd';
 
 const UseAllUrl = () => {
 
-    const { setUrl } = useContext(appContext);
-
+    const { setUrls } = useContext(appContext);
 
     const allUrl = () => {
+        const token = JSON.parse(localStorage.getItem('token'))
 
         const data = fetch(url + "/api/v1/url/allUrl", {
             headers: {
@@ -19,7 +20,7 @@ const UseAllUrl = () => {
         })
             .then((res) => res.json())
             .then((res) => {
-                setUrl(res.reverse())
+                setUrls(res)
             })
             .catch((error) => console.log(error))
 

@@ -1,8 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { notifyUpdate, notifyUpdateError } from '../utils/toastNotify';
 import { url as urlBackEnd } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl';
-import { token } from '../utils/urlBackEnd';
 const UsePatchUrl = () => {
     const { allUrl } = UseAllUrl();
 
@@ -10,6 +9,7 @@ const UsePatchUrl = () => {
     const [urlUpdate, setUrlUpdate] = useState(false);
 
     const patchUrl = (data) => {
+        const token = JSON.parse(localStorage.getItem('token'))
 
         const res = fetch(urlBackEnd + "/api/v1/url/edit/" + url?.id, {
             method: "PATCH",

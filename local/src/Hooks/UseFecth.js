@@ -5,6 +5,7 @@ import { url } from '../utils/urlBackEnd';
 
 const UseFecth = () => {
     const { user, setUser } = useContext(appContext);
+    const [loading, setLoading] = useState(false);
 
     const userLogin = (user) => {
         const data = fetch(url + "/api/v1/user/login", {
@@ -19,8 +20,9 @@ const UseFecth = () => {
             .then((date) => {
                 if (date?.msg) return notifyLogin(date?.msg)
                 const { nombre, token } = date;
-                setUser({ nombre })
                 localStorage.setItem("token", JSON.stringify(token))
+                setUser({ nombre })
+                setLoading(true)
             })
             .catch((error) => console.log(error))
 
@@ -57,11 +59,11 @@ const UseFecth = () => {
                 'Access-Control-Allow-Origin': "*",
             },
         })
-            .then((res) => console.log(res))
+            .then((res) => setLoading(false))
             .catch((error) => console.log(error))
 
     }
-    return { userLogin, logOut, registerUser }
+    return { userLogin, logOut, registerUser, loading }
 }
 
 export default UseFecth

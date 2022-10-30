@@ -2,13 +2,15 @@ import React, { useState } from 'react'
 import { notifyDelete, notifyDeleteError } from '../utils/toastNotify'
 import { url } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl'
-import { token } from '../utils/urlBackEnd'
 const UseDeleteUri = () => {
     const { allUrl } = UseAllUrl();
 
     const [errorDelete, setErrorDelete] = useState(false)
 
     const deleteUrl = (id) => {
+
+        const token = JSON.parse(localStorage.getItem('token'))
+
         const res = fetch(`${url}/api/v1/url/${id}`, {
             method: "DELETE",
             headers: {

@@ -1,10 +1,9 @@
 import React, { createContext, useState } from 'react'
-
 export const appContext = createContext()
 
 const UserProvider = ({ children }) => {
     const [user, setUser] = useState({});
-    const [url, setUrl] = useState([])
+    const [urls, setUrls] = useState([])
 
     if (user?.nombre) {
         localStorage.setItem("user", JSON.stringify(user) || "")
@@ -19,7 +18,7 @@ const UserProvider = ({ children }) => {
     }
 
     return (
-        <appContext.Provider value={{ user, setUser, url, setUrl }}>
+        <appContext.Provider value={{ user, setUser, urls, setUrls }}>
             {children}
         </appContext.Provider>
     )

@@ -7,18 +7,16 @@ import UseFecth from "../Hooks/UseFecth"
 import { useContext } from "react"
 import { appContext } from "../components/UserProvider"
 import { Toaster } from "react-hot-toast"
-
 const Login = () => {
-
-
     const { user } = useContext(appContext);
 
-    const { userLogin } = UseFecth();
+    const { userLogin, loading } = UseFecth();
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    if (user?.nombre) {
+    if (loading) {
         return <Navigate to="/" />
     }
+
     return (
         <div className='h-screen w-screen grid grid-rows-6  grid-cols-2 lg:grid-cols-3  bg-gradient-to-tr from-[#0e1c26] to-[#294861] font-mono text-lg relative overflow-hidden'>
             <img src={avatarBg} alt="" className="absolute scale-150 lg:scale-100 md:-top-80  z-0 " />
@@ -39,8 +37,8 @@ const Login = () => {
                         <label htmlFor="email">Email</label>
                         <input type="email" id='email' {...register("email", { required: { message: "Campo requerido." } })} placeholder='Email' className='bg-transparent border-l-2  border-white focus:border-l-0 focus:ease-out focus:duration-100  placeholder:text-white outline-none  focus:border-b-4 px-5' />
                         <i className='text-sm'>{errors?.email?.message}</i>
-                        <label htmlFor="password">Contraseña</label>
-                        <input type="password" id='password'{...register("password", { required: "Campo requerido.", minLength: { value: 4, message: "Campo Incompleto." } })} placeholder='Cotraseña' className='bg-transparent border-l-2 border-white focus:border-l-0 focus:ease-out focus:duration-100  placeholder:text-white outline-none  focus:border-b-4 px-5' />
+                        <label htmlFor="pass">Contraseña</label>
+                        <input type="password" id='pass'{...register("password", { required: "Campo requerido.", minLength: { value: 4, message: "Campo Incompleto." } })} placeholder='Cotraseña' className='bg-transparent border-l-2 border-white focus:border-l-0 focus:ease-out focus:duration-100  placeholder:text-white outline-none  focus:border-b-4 px-5' />
                         <i className='text-sm'>{errors?.password?.message}</i>
                         <button type='submit' className='bg-white text-black w-32 self-center p-1 rounded-xl active:scale-105 active:ease-linear active:duration-100' >Login</button>
                     </form>

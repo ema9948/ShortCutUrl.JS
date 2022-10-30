@@ -11,7 +11,7 @@ import UseAllUrl from '../Hooks/UseAllUrl';
 import UsePatchUrl from '../Hooks/UsePatchUrl';
 
 const Home = () => {
-    const { url } = useContext(appContext)
+    const { urls, setUrls } = useContext(appContext)
     const { register, handleSubmit, watch, formState: { errors }, setValue, reset } = useForm();
     const { urlUpdate, setUrlUpdate, patchUrl, setUrl, url: urlForm } = UsePatchUrl();
     const { add } = UseAddUrl();
@@ -69,7 +69,7 @@ const Home = () => {
                     </thead>
                     <tbody className='w-full h-full flex flex-col overflow-auto bg-gray-400'>
                         {
-                            url.map((item) => <UrlTable key={item.id} item={item} update={setUrlUpdate} url={setUrl} />)
+                            urls.map((item) => <UrlTable key={item.id} item={item} update={setUrlUpdate} url={setUrl} />)
                         }
                     </tbody>
                 </table>

@@ -3,11 +3,12 @@ import { notify, notifyError } from '../utils/toastNotify';
 import { isValidURL } from '../utils/uriValidator';
 import { url } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl';
-import { token } from '../utils/urlBackEnd';
 const UseAddUrl = () => {
     const { allUrl } = UseAllUrl()
 
     const add = (data) => {
+        const token = JSON.parse(localStorage.getItem('token'))
+
 
         if (!isValidURL(data)) return notifyError()
 
@@ -31,7 +32,6 @@ const UseAddUrl = () => {
             })
             .catch((errors) => console.log(errors))
 
-        return null;
     }
 
     return { add }
