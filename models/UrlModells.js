@@ -1,11 +1,10 @@
 import { Sequelize, DataTypes } from "sequelize";
 import sequelize from "../DB/configDb.js";
-import User from "./UserModells.js";
 
 const Url = sequelize.define("url", {
     id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
         primaryKey: true
     },
     url: {

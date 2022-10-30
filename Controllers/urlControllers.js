@@ -1,3 +1,4 @@
+import sequelize from '../DB/configDb.js';
 import Url from '../models/UrlModells.js';
 import Post from "../models/UrlModells.js"
 import User from "../models/UserModells.js"
@@ -19,7 +20,7 @@ export const allUrls = async (req, res) => {
 export const addUrl = async (req, res) => {
     const uid = req.uid;
 
-    // console.log(req.uid)
+    // console.log(req.uid);
     const { url } = req.body
     const hash = hashCode(url)
 
@@ -41,10 +42,9 @@ export const addUrl = async (req, res) => {
 
 export const editUrl = async (req, res) => {
     const uid = req.uid;
-
     const { id } = req.params;
     const { url } = req.body;
-
+    console.log(url)
     try {
         if (!url) return res.status(404).json({ "content": "require url" });
 

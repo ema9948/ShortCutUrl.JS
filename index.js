@@ -5,13 +5,14 @@ import User from "./models/UserModells.js";
 import Url from "./models/UrlModells.js";
 import userRoute from "./Routes/user.Router.js";
 import urlRouter from "./Routes/url.Router.js";
-import cookieParser from "cookie-parser";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 const app = express();
 
 
-app.use(cors({ origin: "*", credentials: true }));
-app.use(cookieParser())
+app.use(cors({ origin: "http://localhost:3000", credentials: true }))
+app.use(express.json())
+app.use(cookieParser());
 
 try {
     if (process.env.DEV) {
@@ -24,7 +25,6 @@ try {
     console.log(error?.original?.code + "(Sequilize)");
 };
 
-app.use(express.json())
 
 app.use("/api/v1/user", userRoute)
 

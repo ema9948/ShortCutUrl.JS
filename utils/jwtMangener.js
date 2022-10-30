@@ -14,9 +14,11 @@ export const jwtGenerate = (uid, res) => {
         const token = jwt.sign({ uid: uid }, process.env.JWTSECRET, { expiresIn: expiresIn });
         res.cookie("Token", token, {
             httpOnly: true,
-            secure: false
+            secure: false,
+            // sameSite: "none"
 
         })
+        return token
     } catch (error) {
         console.log(error.message)
     }
