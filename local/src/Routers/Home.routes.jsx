@@ -38,7 +38,7 @@ const Home = () => {
                         <label htmlFor="add" className='text-3xl font-extrabold'>Editar ShortCutUrl</label>
                         <input type="text" id='add'  {...register("url", { required: "Campo requerido." }, setValue("url", urlForm.url))} className='rounded border-2 border-black w-48 px-1 mx-5' />
                         <h4 className='text-red-600 text-sm font-extrabold'>{errors?.url?.message}</h4>
-                        <button type='submit' className='rounded border border-black font-extrabold active:scale-110 bg-sky-600 w-32'  >Agregar</button>
+                            <button type='submit' className='rounded border border-black font-extrabold active:scale-110 bg-sky-600 w-32'  >Editar</button>
 
                     </form>
 

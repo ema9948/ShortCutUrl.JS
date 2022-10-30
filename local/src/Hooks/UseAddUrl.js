@@ -3,7 +3,7 @@ import { notify, notifyError } from '../utils/toastNotify';
 import { isValidURL } from '../utils/uriValidator';
 import { url } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl';
-
+import { token } from '../utils/urlBackEnd';
 const UseAddUrl = () => {
     const { allUrl } = UseAllUrl()
 
@@ -12,13 +12,11 @@ const UseAddUrl = () => {
         if (!isValidURL(data)) return notifyError()
 
         const date = fetch(`${url}/api/v1/url/add`, {
-            mode: "cors",
             method: "post",
-            credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': "*",
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         })

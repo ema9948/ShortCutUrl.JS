@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { notifyUpdate, notifyUpdateError } from '../utils/toastNotify';
 import { url as urlBackEnd } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl';
-
+import { token } from '../utils/urlBackEnd';
 const UsePatchUrl = () => {
     const { allUrl } = UseAllUrl();
 
@@ -12,13 +12,11 @@ const UsePatchUrl = () => {
     const patchUrl = (data) => {
 
         const res = fetch(urlBackEnd + "/api/v1/url/edit/" + url?.id, {
-            mode: "cors",
             method: "PATCH",
-            credentials: "include",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': "*",
+                'Authorization': `Bearer ${token}`,
             },
             body: JSON.stringify(data),
         })

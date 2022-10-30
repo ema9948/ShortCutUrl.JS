@@ -19,9 +19,8 @@ const UseFecth = () => {
             .then((date) => {
                 if (date?.msg) return notifyLogin(date?.msg)
                 const { nombre, token } = date;
-
                 setUser({ nombre })
-                localStorage.setItem("token", JSON.stringify({ token }))
+                localStorage.setItem("token", JSON.stringify(token))
             })
             .catch((error) => console.log(error))
 

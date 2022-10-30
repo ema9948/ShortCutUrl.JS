@@ -12,14 +12,14 @@ export const Login = async (req, res) => {
 
         if (!user.auth(password)) return res.status(404).json({ msg: "Verifique las credenciales" })
 
-        if (!user.verificado) return res.status(401).json({ msg: "Falta verificar la cuenta" })
+        // if (!user.verificado) return res.status(401).json({ msg: "Falta verificar la cuenta" })
 
         const token = jwtGenerate(user.id, res);
 
 
 
         //?sin token, con cookies
-        return res.status(200).json({ nombre: user.nombre });
+        return res.status(200).json({ nombre: user.nombre, token: token });
 
     } catch (error) {
         return res.sendStatus(500)
@@ -51,11 +51,11 @@ export const Register = async (req, res) => {
         });
 
 
-        return res.sendStatus(201)
+        return res.status(201).json({ token: token });
 
     } catch (error) {
         //*para ver errores
-        // return res.status(404).json({ msg: error?.errors[0].message  })
+        return res.status(500).json({ msg: error?.errors[0].message })
     }
 }
 

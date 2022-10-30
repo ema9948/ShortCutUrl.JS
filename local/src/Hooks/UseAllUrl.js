@@ -1,10 +1,12 @@
 import { useContext } from 'react';
 import { appContext } from '../components/UserProvider';
 import { url } from '../utils/urlBackEnd';
-
+import { token } from '../utils/urlBackEnd';
 
 const UseAllUrl = () => {
+
     const { setUrl } = useContext(appContext);
+
 
     const allUrl = () => {
 
@@ -12,7 +14,8 @@ const UseAllUrl = () => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-            },
+                'Authorization': `Bearer ${token}`,
+            }
         })
             .then((res) => res.json())
             .then((res) => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { notifyDelete, notifyDeleteError } from '../utils/toastNotify'
 import { url } from '../utils/urlBackEnd'
 import UseAllUrl from './UseAllUrl'
-
+import { token } from '../utils/urlBackEnd'
 const UseDeleteUri = () => {
     const { allUrl } = UseAllUrl();
 
@@ -10,14 +10,12 @@ const UseDeleteUri = () => {
 
     const deleteUrl = (id) => {
         const res = fetch(`${url}/api/v1/url/${id}`, {
-            mode: "cors",
+            method: "DELETE",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': "*",
-            },
-            method: "DELETE",
-            credentials: "include"
+                'Authorization': `Bearer ${token}`,
+            }
         })
             .then(res => {
 
